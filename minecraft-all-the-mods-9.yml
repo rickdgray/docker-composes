@@ -1,0 +1,47 @@
+services:
+  atm9:
+    image: itzg/minecraft-server
+    container_name: atm9
+    restart: unless-stopped
+    user: 568:568
+    ports:
+      - 25565:25565
+    environment:
+      EULA: "true"
+      DUMP_SERVER_PROPERTIES: "true"
+      TYPE: AUTO_CURSEFORGE
+      CF_SLUG: all-the-mods-9
+      CF_API_KEY: ${CF_API_KEY}
+      # single threaded downloads to prevent throttling
+      # CF_PARALLEL_DOWNLOADS: "1"
+      MEMORY: 32G
+      MAX_PLAYERS: "20"
+      MOTD: |
+        A %TYPE% server on %VERSION%
+        running %MODPACK_NAME% %MODPACK_VERSION%
+      DIFFICULTY: normal
+      OPS: 0ctobogs
+      SPAWN_PROTECTION: "0"
+      ENABLE_RCON: "false"
+      ALLOW_FLIGHT: "true"
+      ENABLE_COMMAND_BLOCK: "true"
+      TZ: America/Chicago
+      # mod control knobs you may want later
+      # comma/space list of project slugs/IDs to exclude
+      # CF_EXCLUDE_MODS: ""
+      # force-include client-tagged mods that are actually needed
+      # CF_FORCE_INCLUDE_MODS: ""
+      # extra individual mods/plugins to fetch by project-file refs
+      # CURSEFORGE_FILES: ""
+    volumes:
+      - ./data:/data
+      - /mnt/fast/minecraft/atm9-world:/data/world
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+networks: {}
+
+# https://console.curseforge.com/#/api-keys
+# .env
+# CF_API_KEY='$2a$10$...'
