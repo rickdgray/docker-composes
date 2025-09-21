@@ -16,6 +16,7 @@ services:
       CF_API_KEY: ${CF_API_KEY}
       # single threaded downloads to prevent throttling
       # CF_PARALLEL_DOWNLOADS: "1"
+      ICON: https://media.forgecdn.net/avatars/thumbnails/902/338/64/64/638350403793040080.png
       MEMORY: 32G
       MAX_PLAYERS: "20"
       MOTD: |
@@ -28,7 +29,7 @@ services:
       ALLOW_FLIGHT: "true"
       ENABLE_COMMAND_BLOCK: "true"
       TZ: America/Chicago
-      # mod control knobs you may want later
+      # --- (Advanced) Mod control knobs you may want later ---
       # comma/space list of project slugs/IDs to exclude
       # CF_EXCLUDE_MODS: ""
       # force-include client-tagged mods that are actually needed
