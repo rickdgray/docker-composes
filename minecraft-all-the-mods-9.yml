@@ -2,22 +2,21 @@
 
 services:
   atm9:
-    image: itzg/minecraft-server
+    image: itzg/minecraft-server:java17
     container_name: atm9
     restart: unless-stopped
     user: 568:568
     ports:
       - 25565:25565
+      - 8123:8123
     environment:
       EULA: "true"
       DUMP_SERVER_PROPERTIES: "true"
       TYPE: AUTO_CURSEFORGE
       CF_SLUG: all-the-mods-9
       CF_API_KEY: ${CF_API_KEY}
-      # single threaded downloads to prevent throttling
-      # CF_PARALLEL_DOWNLOADS: "1"
       ICON: https://media.forgecdn.net/avatars/thumbnails/902/338/64/64/638350403793040080.png
-      MEMORY: 32G
+      MEMORY: 16G
       MAX_PLAYERS: "20"
       MOTD: |
         A %TYPE% server on %VERSION%
@@ -29,16 +28,14 @@ services:
       ALLOW_FLIGHT: "true"
       ENABLE_COMMAND_BLOCK: "true"
       TZ: America/Chicago
-      # --- (Advanced) Mod control knobs you may want later ---
-      # comma/space list of project slugs/IDs to exclude
-      # CF_EXCLUDE_MODS: ""
-      # force-include client-tagged mods that are actually needed
-      # CF_FORCE_INCLUDE_MODS: ""
-      # extra individual mods/plugins to fetch by project-file refs
-      # CURSEFORGE_FILES: ""
+      CURSEFORGE_FILES: |
+        dynmapforge@3.6
+      MODS: "/extras/DynmapBlockScan-3.6-forge-1.20.jar"
+      # temp disable for very long initial startups
+      MAX_TICK_TIME: "-1"
     volumes:
-      - ./data:/data
-      - /mnt/fast/minecraft/atm9-world:/data/world
+      - /mnt/fast/minecraft/atm9:/data
+      - /mnt/fast/minecraft/extras:/extras:ro
     ulimits:
       nofile:
         soft: 65536
